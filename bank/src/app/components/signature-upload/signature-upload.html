@@ -1,0 +1,29 @@
+<div class="signature-upload-container">
+  <h2>Upload Your Signature</h2>
+
+  <!-- Hidden file input triggered by button -->
+  <input
+    type="file"
+    accept="image/*"
+    id="signatureInput"
+    hidden
+    (change)="onSignatureSelected($event)"
+  />
+  <button mat-raised-button color="accent" (click)="triggerFileInput()">
+    Choose Signature File
+  </button>
+
+  <!-- Display selected file name -->
+  <mat-card *ngIf="uploadedSignature" class="signature-preview">
+    <p><strong>Selected File:</strong> {{ uploadedSignature.name }}</p>
+  </mat-card>
+
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onNext()"
+    [disabled]="!uploadedSignature"
+  >
+    Next
+  </button>
+</div>

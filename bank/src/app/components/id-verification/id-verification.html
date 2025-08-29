@@ -1,0 +1,19 @@
+<div class="id-verification-container">
+  <h2>Passport Verification</h2>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Passport ID</mat-label>
+    <input matInput [(ngModel)]="passportId" placeholder="Enter your passport number" required />
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="verifyPassport()" [disabled]="!passportId">
+    Verify
+  </button>
+
+  <div *ngIf="passportExists !== null" class="result-message">
+    <mat-icon color="accent">{{ passportExists ? 'check_circle' : 'cancel' }}</mat-icon>
+    <span>
+      {{ passportExists ? 'Passport verified successfully.' : 'Passport not found.' }}
+    </span>
+  </div>
+</div>
