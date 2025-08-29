@@ -1,0 +1,45 @@
+<div class="login-page">
+  <div class="overlay"></div>
+
+  <mat-card class="login-card" @fadeInUp>
+    <h2 class="bank-title">Bank of Tomorrow</h2>
+    <p class="subtitle">Secure Login to Your Account</p>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <!-- Email -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Enter your email" formControlName="email">
+        <mat-icon matSuffix>person</mat-icon>
+        <mat-error *ngIf="loginForm.controls['email'].invalid && loginForm.controls['email'].touched">
+          Please enter a valid email
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Password -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password">
+        <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched">
+          Password is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Remember me + Forgot -->
+      <div class="options">
+        <mat-checkbox formControlName="remember">Remember me</mat-checkbox>
+        <a class="forgot" href="#">Forgot password?</a>
+      </div>
+
+      <!-- Login button -->
+      <button mat-raised-button color="primary" class="login-btn full-width" type="submit">
+        Login
+      </button>
+
+      <p class="signup-text">Don’t have an account? <a href="#">Create Account</a></p>
+    </form>
+  </mat-card>
+</div>

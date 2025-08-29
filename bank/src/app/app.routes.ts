@@ -9,6 +9,7 @@ import { ProductSelectionComponent } from './components/product-selection/produc
 import { SignatureUploadComponent } from './components/signature-upload/signature-upload';
 import { SubmitComponent } from './components/submit/submit';
 import { SummaryPdfComponent } from './components/summary-pdf/summary-pdf';
+import { LoginComponent } from './components/login/login';
 
 export const routes: Routes = [
 
@@ -16,6 +17,7 @@ export const routes: Routes = [
     path: 'view-bank-details',
     component: ViewBankDetails
   },
+  { path: 'login', component: LoginComponent },
   {
     path: '',
     redirectTo: 'select-country',
