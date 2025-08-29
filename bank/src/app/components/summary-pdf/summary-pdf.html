@@ -1,0 +1,31 @@
+<div class="summary-container" id="summaryContent">
+  <mat-card>
+    <mat-card-title>Customer Summary</mat-card-title>
+    <mat-card-content>
+      <p><strong>Name:</strong> {{ customerInfo.firstName }} {{ customerInfo.lastName }}</p>
+      <p><strong>Date of Birth:</strong> {{ customerInfo.dob }}</p>
+      <p><strong>Email:</strong> {{ customerInfo.email }}</p>
+      <p><strong>Phone:</strong> {{ customerInfo.phone }}</p>
+      <p><strong>Address:</strong> {{ customerInfo.address }}</p>
+
+      <mat-divider></mat-divider>
+
+      <p><strong>Selected Product:</strong> {{ selectedProduct }}</p>
+      <p><strong>Politically Connected:</strong> {{ politicalStatus }}</p>
+
+      <mat-divider></mat-divider>
+
+      <p><strong>Uploaded Documents:</strong></p>
+      <mat-list>
+        <mat-list-item *ngFor="let doc of uploadedDocuments">{{ doc }}</mat-list-item>
+      </mat-list>
+
+      <p><strong>Signature File:</strong> {{ signatureFile }}</p>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div class="action-buttons">
+  <button mat-raised-button color="primary" (click)="downloadPDF()">Download PDF</button>
+  <button mat-raised-button color="accent" (click)="submitApplication()">Submit Application</button>
+</div>

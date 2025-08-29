@@ -1,0 +1,13 @@
+.political-check-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  max-width: 400px;
+  margin: auto;
+}
+
+mat-radio-button {
+  display: block;
+  margin-bottom: 8px;
+}

@@ -1,0 +1,35 @@
+<div class="document-upload-container">
+  <h2>Upload Your Documents</h2>
+
+  <!-- Hidden file input triggered by button -->
+  <input
+    type="file"
+    multiple
+    (change)="onFileSelected($event)"
+    id="fileInput"
+    hidden
+  />
+  <button mat-raised-button color="accent" (click)="triggerFileInput()">
+    Choose Files
+  </button>
+
+  <!-- Display selected files -->
+  <div *ngIf="uploadedFiles.length > 0" class="file-list">
+    <h3>Selected Files:</h3>
+    <mat-list>
+      <mat-list-item *ngFor="let file of uploadedFiles">
+        {{ file.name }}
+      </mat-list-item>
+    </mat-list>
+  </div>
+
+  <!-- Navigation button -->
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onNext()"
+    [disabled]="uploadedFiles.length === 0"
+  >
+    Next
+  </button>
+</div>

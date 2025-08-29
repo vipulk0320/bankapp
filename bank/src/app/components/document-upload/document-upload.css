@@ -1,0 +1,12 @@
+.document-upload-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  max-width: 500px;
+  margin: auto;
+}
+
+.file-list {
+  margin-top: 16px;
+}

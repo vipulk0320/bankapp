@@ -1,0 +1,65 @@
+<div class="customer-info-container">
+  <h2>Customer Information</h2>
+  <p class="subtitle">Please provide your basic details to continue.</p>
+
+  <form #f="ngForm" (ngSubmit)="onNext()" novalidate>
+    <!-- Name -->
+    <div class="row">
+      <mat-form-field appearance="fill" class="form-group">
+        <mat-label>First Name <span class="req">*</span></mat-label>
+        <input matInput id="firstName" name="firstName" [(ngModel)]="model.firstName" #firstNameCtrl="ngModel" required autocomplete="given-name" placeholder="e.g., Amit" />
+        <mat-error *ngIf="firstNameCtrl.invalid && (firstNameCtrl.dirty || firstNameCtrl.touched)">First name is required.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="form-group">
+        <mat-label>Last Name <span class="req">*</span></mat-label>
+        <input matInput id="lastName" name="lastName" [(ngModel)]="model.lastName" #lastNameCtrl="ngModel" required autocomplete="family-name" placeholder="e.g., Sharma" />
+        <mat-error *ngIf="lastNameCtrl.invalid && (lastNameCtrl.dirty || lastNameCtrl.touched)">Last name is required.</mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- DOB & Phone -->
+    <div class="row">
+      <mat-form-field appearance="fill" class="form-group">
+        <mat-label>Date of Birth <span class="req">*</span></mat-label>
+        <input matInput id="dob" name="dob" type="date" [(ngModel)]="model.dob" #dobCtrl="ngModel" required />
+        <mat-error *ngIf="dobCtrl.invalid && (dobCtrl.dirty || dobCtrl.touched)">Date of birth is required.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="form-group">
+        <mat-label>Phone <span class="req">*</span></mat-label>
+        <input matInput id="phone" name="phone" type="tel" [(ngModel)]="model.phone" #phoneCtrl="ngModel" required minlength="7" maxlength="15" pattern="^[0-9+\-\s()]{7,15}$" autocomplete="tel" placeholder="e.g., +91 98765 43210" />
+        <mat-hint>Digits only; you can include +, spaces, or dashes.</mat-hint>
+        <mat-error *ngIf="phoneCtrl.errors && (phoneCtrl.dirty || phoneCtrl.touched)">
+          <span *ngIf="phoneCtrl.errors['required']">Phone is required.</span>
+          <span *ngIf="phoneCtrl.errors['minlength']">Too short.</span>
+          <span *ngIf="phoneCtrl.errors['maxlength']">Too long.</span>
+          <span *ngIf="phoneCtrl.errors['pattern']">Invalid phone format.</span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Email -->
+    <div class="row">
+      <mat-form-field appearance="fill" class="form-group full">
+        <mat-label>Email <span class="req">*</span></mat-label>
+        <input matInput id="email" name="email" type="email" [(ngModel)]="model.email" #emailCtrl="ngModel" required autocomplete="email" placeholder="e.g., name@example.com" />
+        <mat-error *ngIf="emailCtrl.invalid && (emailCtrl.dirty || emailCtrl.touched)">Please enter a valid email address.</mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Address -->
+    <mat-form-field appearance="fill" class="form-group full">
+      <mat-label>Address <span class="req">*</span></mat-label>
+      <textarea matInput id="address" name="address" rows="3" [(ngModel)]="model.address" #addressCtrl="ngModel" required autocomplete="street-address" placeholder="Flat/House No., Street, City, State, PIN"></textarea>
+      <mat-error *ngIf="addressCtrl.invalid && (addressCtrl.dirty || addressCtrl.touched)">Address is required.</mat-error>
+    </mat-form-field>
+
+    <!-- Actions -->
+    <div class="actions">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!f.form.valid">
+        Next
+      </button>
+    </div>
+  </form>
+</div>

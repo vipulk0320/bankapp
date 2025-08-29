@@ -1,0 +1,16 @@
+<div class="country-selector-container">
+  <h2>Select Your Country</h2>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Country</mat-label>
+    <mat-select [(ngModel)]="selectedCountry" (selectionChange)="onCountryChange()" required>
+      <mat-option *ngFor="let c of countries" [value]="c">
+        {{ c }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="onNext()" [disabled]="!selectedCountry">
+    Next
+  </button>
+</div>

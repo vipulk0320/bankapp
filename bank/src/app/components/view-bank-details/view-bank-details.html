@@ -1,0 +1,166 @@
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="title-wrap">
+      <h2 class="title">Bank of Tomorrow</h2>
+      <p class="subtitle">Search Smart. Manage Faster.</p>
+    </div>
+
+    <div class="actions-wrap">
+      <!-- Search button -->
+      <button *ngIf="!searchOpen" mat-stroked-button class="btn" (click)="toggleSearch()">
+        <mat-icon>search</mat-icon>
+        <span>Search</span>
+      </button>
+
+      <!-- Expanding input -->
+      <mat-form-field appearance="outline" class="search-input" [class.open]="searchOpen">
+        <mat-label>Search…</mat-label>
+        <input matInput [(ngModel)]="searchTerm" (input)="onSearchInput()">
+        <button *ngIf="searchTerm" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <!-- Filter button -->
+      <button mat-raised-button color="primary" class="btn" (click)="openFilters()">
+        <mat-icon>tune</mat-icon>
+        Filters
+      </button>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="card mat-elevation-z4">
+    <table mat-table [dataSource]="paginatedPeople" class="table">
+
+      <!-- Name -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let p">{{ fullName(p) }}</td>
+      </ng-container>
+
+      <!-- Email -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let p">{{ p.email }}</td>
+      </ng-container>
+
+      <!-- Ref -->
+      <ng-container matColumnDef="refNumber">
+        <th mat-header-cell *matHeaderCellDef>Ref #</th>
+        <td mat-cell *matCellDef="let p"><span class="ref-pill">{{ p.refNumber }}</span></td>
+      </ng-container>
+
+      <!-- Date -->
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef>Date</th>
+        <td mat-cell *matCellDef="let p">{{ p.date | date:'mediumDate' }}</td>
+      </ng-container>
+
+      <!-- Actions -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="center">Actions</th>
+        <td mat-cell *matCellDef="let p" class="center">
+          <button mat-icon-button color="primary" (click)="openView(p)" aria-label="View">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button mat-icon-button (click)="downloadRecord(p)" aria-label="Download">
+            <mat-icon>download</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="confirmDelete(p)" aria-label="Delete">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- rows -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator
+      [length]="filteredPeople.length"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[5,10,20]"
+      (page)="pageChanged($event)">
+    </mat-paginator>
+  </div>
+</div>
+
+<!-- View Dialog -->
+<ng-template #viewDialog let-data>
+  <h2 mat-dialog-title>Person Details</h2>
+  <mat-dialog-content class="dialog-body export-area">
+    <div class="detail-grid">
+      <div class="item"><label>First name</label><span>{{ data.firstName }}</span></div>
+      <div class="item"><label>Last name</label><span>{{ data.lastName }}</span></div>
+      <div class="item"><label>Email</label><span>{{ data.email }}</span></div>
+      <div class="item"><label>Phone</label><span>{{ data.phoneNumber }}</span></div>
+      <div class="item"><label>Ref #</label><span class="ref-pill">{{ data.refNumber }}</span></div>
+      <div class="item"><label>National ID</label><span>{{ data.nationalId }}</span></div>
+      <div class="item"><label>DOB</label><span>{{ data.dob | date:'longDate' }}</span></div>
+      <div class="item span-2"><label>Address</label><span>{{ data.address }}</span></div>
+      <div class="item"><label>Date</label><span>{{ data.date | date:'longDate' }}</span></div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-stroked-button mat-dialog-close>Close</button>
+    <button mat-raised-button color="primary" mat-dialog-close>OK</button>
+  </mat-dialog-actions>
+</ng-template>
+<!-- Delete Dialog -->
+<ng-template #deleteDialog let-data>
+  <h2 mat-dialog-title class="warn-title">Confirm Delete</h2>
+  <mat-dialog-content>
+    <p>Are you sure you want to delete <b>{{ data.firstName }} {{ data.lastName }}</b>?</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-stroked-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="warn" [mat-dialog-close]="true">Delete</button>
+  </mat-dialog-actions>
+</ng-template>
+
+<!-- Filter Dialog -->
+<ng-template #filterDialog>
+  <h2 mat-dialog-title>Filters</h2>
+  <mat-dialog-content class="dialog-body">
+    <mat-button-toggle-group [(ngModel)]="activeFilter" class="toggle-group" appearance="legacy">
+      <mat-button-toggle value="date">By Date Range</mat-button-toggle>
+      <mat-button-toggle value="dob">By DOB</mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <div class="filter-container">
+      <!-- Date Range -->
+      <div class="filter-panel" [class.active]="activeFilter==='date'">
+        <mat-form-field appearance="outline" class="hoverable">
+          <mat-label>Start date</mat-label>
+          <input matInput [matDatepicker]="sd" [(ngModel)]="dateRangeStart" placeholder="MM/DD/YYYY">
+          <mat-datepicker-toggle matSuffix [for]="sd"></mat-datepicker-toggle>
+          <mat-datepicker #sd></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="hoverable">
+          <mat-label>End date</mat-label>
+          <input matInput [matDatepicker]="ed" [(ngModel)]="dateRangeEnd" placeholder="MM/DD/YYYY">
+          <mat-datepicker-toggle matSuffix [for]="ed"></mat-datepicker-toggle>
+          <mat-datepicker #ed></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <!-- DOB -->
+      <div class="filter-panel" [class.active]="activeFilter==='dob'">
+        <mat-form-field appearance="outline" class="hoverable">
+          <mat-label>DOB</mat-label>
+          <input matInput [matDatepicker]="dob" [(ngModel)]="dobSelected" placeholder="MM/DD/YYYY">
+          <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+          <mat-datepicker #dob></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-stroked-button mat-dialog-close (click)="clearFilters()">Clear</button>
+    <button mat-raised-button color="primary" mat-dialog-close (click)="applyFilters()">Apply</button>
+  </mat-dialog-actions>
+</ng-template>
