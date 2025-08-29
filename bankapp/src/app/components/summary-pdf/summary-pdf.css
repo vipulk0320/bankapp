@@ -1,0 +1,12 @@
+.summary-container {
+  padding: 24px;
+  max-width: 600px;
+  margin: auto;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}

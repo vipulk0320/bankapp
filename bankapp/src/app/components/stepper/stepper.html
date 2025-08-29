@@ -1,0 +1,5 @@
+<mat-horizontal-stepper class="static-stepper" [linear]="true" [selectedIndex]="-1">
+  <mat-step *ngFor="let step of steps" [label]="step" [editable]="false">
+    <!-- No content inside steps -->
+  </mat-step>
+</mat-horizontal-stepper>

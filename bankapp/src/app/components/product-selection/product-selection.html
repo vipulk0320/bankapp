@@ -1,0 +1,14 @@
+<div class="product-selection-container">
+  <h2>Select Products</h2>
+
+  <mat-checkbox
+    *ngFor="let product of products"
+    [checked]="selectedProducts.includes(product)"
+    (change)="toggleProduct(product)">
+    {{ product }}
+  </mat-checkbox>
+
+  <button mat-raised-button color="primary" (click)="onNext()" [disabled]="selectedProducts.length === 0">
+    Next
+  </button>
+</div>

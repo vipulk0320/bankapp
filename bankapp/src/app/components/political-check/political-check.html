@@ -1,0 +1,12 @@
+<div class="political-check-container">
+  <h2>Are you politically connected?</h2>
+
+  <mat-radio-group [(ngModel)]="isPoliticallyConnected">
+    <mat-radio-button value="yes">Yes</mat-radio-button>
+    <mat-radio-button value="no">No</mat-radio-button>
+  </mat-radio-group>
+
+  <button mat-raised-button color="primary" (click)="onNext()" [disabled]="!isPoliticallyConnected">
+    Next
+  </button>
+</div>

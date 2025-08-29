@@ -1,0 +1,14 @@
+.static-stepper {
+  margin: 16px;
+  pointer-events: none; /* disables interaction */
+}
+
+.mat-step-header {
+  cursor: default !important;
+  color: grey !important; /* force all step labels to grey */
+}
+
+.mat-step-header .mat-step-icon {
+  background-color: lightgrey !important; /* make all step icons grey */
+  color: black !important;
+}

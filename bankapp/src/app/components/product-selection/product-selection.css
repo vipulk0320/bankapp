@@ -1,0 +1,12 @@
+.product-selection-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  max-width: 400px;
+  margin: auto;
+}
+
+mat-checkbox {
+  margin-bottom: 8px;
+}

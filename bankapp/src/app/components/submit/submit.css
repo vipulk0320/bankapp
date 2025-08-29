@@ -1,0 +1,9 @@
+.submit-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px;
+  max-width: 500px;
+  margin: auto;
+  text-align: center;
+}
